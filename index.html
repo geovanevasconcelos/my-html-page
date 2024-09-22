@@ -19,6 +19,7 @@
         const apiKey = getQueryParam('apiKey') || '9cda0170-de98-4142-9e2c-8023fcd990a2'; // Fallback to default API key
         const assistant = getQueryParam('assistant') || 'b9bfd208-7b39-4976-b1ff-7461bae34cf8'; // Fallback to default Assistant ID
 
+        // Simplified button configuration (icon only, no text)
         const buttonConfig = {
             position: "bottom-right", // Set button position
             offset: "40px", // Distance from the edge
@@ -26,27 +27,22 @@
             height: "50px", // Height of the button
             idle: { // State when not active
                 color: `rgb(93, 254, 202)`, 
-                type: "pill", // or "round"
-                title: "Have a quick question?", // Required for Pill
-                subtitle: "Talk with our AI assistant", // Required for Pill
+                type: "round", // Just the round button, no text
                 icon: `https://unpkg.com/lucide-static@0.321.0/icons/phone.svg`,
             },
             loading: { // State when connecting
                 color: `rgb(93, 124, 202)`,
-                type: "pill", // or "round"
-                title: "Connecting...", // Required for Pill
-                subtitle: "Please wait", // Required for Pill
+                type: "round", // Just the round button, no text
                 icon: `https://unpkg.com/lucide-static@0.321.0/icons/loader-2.svg`,
             },
             active: { // State when call is active
                 color: `rgb(255, 0, 0)`,
-                type: "pill", // or "round"
-                title: "Call is in progress...",
-                subtitle: "End the call.", // Required for Pill
+                type: "round", // Just the round button, no text
                 icon: `https://unpkg.com/lucide-static@0.321.0/icons/phone-off.svg`,
             },
         };
 
+        // Inject Vapi AI SDK and configure
         (function (d, t) {
             var g = document.createElement(t),
                 s = d.getElementsByTagName(t)[0];
