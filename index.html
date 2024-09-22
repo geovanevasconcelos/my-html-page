@@ -4,64 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vapi AI Assistant</title>
-    <style>
-        /* Additional CSS for button styling */
-        .vapi-button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: auto;
-            padding: 10px 20px;
-            background-color: rgb(93, 254, 202);
-            color: white;
-            border-radius: 50px;
-            font-family: Arial, sans-serif;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .vapi-button:hover {
-            background-color: rgb(80, 220, 180);
-        }
-
-        .vapi-button img {
-            margin-right: 10px;
-        }
-    </style>
 </head>
 <body>
-    <div class="vapi-button" id="vapi-button">
-        <img src="https://unpkg.com/lucide-static@0.321.0/icons/phone.svg" alt="Talk">
-        <span>Have a quick question? Talk with our AI assistant</span>
-    </div>
-
     <script>
         var vapiInstance = null;
 
+        // Function to get query parameters
         function getQueryParam(param) {
             let urlParams = new URLSearchParams(window.location.search);
             return urlParams.get(param);
         }
 
-        const apiKey = getQueryParam('apiKey') || 'defaultkey';
-        const assistant = getQueryParam('assistant') || 'default assistant';
+        // Dynamically set API key and Assistant ID from the query parameters
+        const apiKey = getQueryParam('apiKey') || 'defaultApi'; // Fallback to default API key
+        const assistant = getQueryParam('assistant') || 'defaultAssistant'; // Fallback to default Assistant ID
+        
+        const buttonConfig = {
+            position: "bottom-right", // Set button position
+            offset: "40px", // Distance from the edge
+            width: "50px", // Min-width of the button
+            height: "50px", // Height of the button
+            idle: { // State when not active
+                color: `rgb(93, 254, 202)`, 
+                type: "pill", // or "round"
+                title: "Have a quick question?", // Required for Pill
+                subtitle: "Talk with our AI assistant", // Required for Pill
+                icon: `https://unpkg.com/lucide-static@0.321.0/icons/phone.svg`,
+            },
+            loading: { // State when connecting
+                color: `rgb(93, 124, 202)`,
+                type: "pill", // or "round"
+                title: "Connecting...", // Required for Pill
+                subtitle: "Please wait", // Required for Pill
+                icon: `https://unpkg.com/lucide-static@0.321.0/icons/loader-2.svg`,
+            },
+            active: { // State when call is active
+                color: `rgb(255, 0, 0)`,
+                type: "pill", // or "round"
+                title: "Call is in progress...",
+                subtitle: "End the call.", // Required for Pill
+                icon: `https://unpkg.com/lucide-static@0.321.0/icons/phone-off.svg`,
+            },
+        };
 
-        const button = document.getElementById('vapi-button');
-        button.addEventListener('click', function() {
-            vapiInstance = window.vapiSDK.run({
-                apiKey: apiKey,
-                assistant: assistant,
-            });
-        });
-
-        (function(d, t) {
-            var g = d.createElement(t),
+        (function (d, t) {
+            var g = document.createElement(t),
                 s = d.getElementsByTagName(t)[0];
             g.src = "https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js";
             g.defer = true;
             g.async = true;
             s.parentNode.insertBefore(g, s);
+            g.onload = function () {
+                vapiInstance = window.vapiSDK.run({
+                    apiKey: apiKey, // Use dynamically set API key
+                    assistant: assistant, // Use dynamically set Assistant ID
+                    config: buttonConfig, // Optional button configuration
+                });
+            };
         })(document, "script");
     </script>
 </body>
