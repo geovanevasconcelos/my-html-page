@@ -4,56 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vapi AI Assistant</title>
-    <style>
-        #assistant-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh; /* Full viewport height */
-            width: 100vw;  /* Full viewport width */
-        }
-    </style>
 </head>
 <body>
-    <div id="assistant-container">
-        <!-- The button will be dynamically inserted here by the script -->
-    </div>
-
     <script>
         var vapiInstance = null;
 
+        // Function to get query parameters
         function getQueryParam(param) {
             let urlParams = new URLSearchParams(window.location.search);
             return urlParams.get(param);
         }
 
-        const apiKey = getQueryParam('apiKey') || 'default-api-key';
-        const assistant = getQueryParam('assistant') || 'default-assistant-id';
+        // Dynamically set API key and Assistant ID from the query parameters
+        const apiKey = getQueryParam('apiKey') || '9cda0170-de98-4142-9e2c-8023fcd990a2'; // Fallback to default API key
+        const assistant = getQueryParam('assistant') || 'b9bfd208-7b39-4976-b1ff-7461bae34cf8'; // Fallback to default Assistant ID
 
+        // Simplified button configuration (icon only, no text)
         const buttonConfig = {
-            position: "absolute",  // Using absolute for manual positioning via CSS
-            offset: "0",  // No offset, centering will be handled by CSS
-            width: "50px", 
-            height: "50px",
-            idle: {
-                color: `rgb(93, 254, 202)`,
-                type: "round",
-                icon: `https://unpkg.com/lucide-static@0.321.0/icons/phone.svg`,
+            position: "bottom-right", // Set button position
+            offset: "40px", // Distance from the edge
+            width: "50px", // Min-width of the button
+            height: "50px", // Height of the button
+            idle: { // State when not active
+                color: rgb(93, 254, 202), 
+                type: "round", // Just the round button, no text
+                icon: https://unpkg.com/lucide-static@0.321.0/icons/phone.svg,
             },
-            loading: {
-                color: `rgb(93, 124, 202)`,
-                type: "round",
-                icon: `https://unpkg.com/lucide-static@0.321.0/icons/loader-2.svg`,
+            loading: { // State when connecting
+                color: rgb(93, 124, 202),
+                type: "round", // Just the round button, no text
+                icon: https://unpkg.com/lucide-static@0.321.0/icons/loader-2.svg,
             },
-            active: {
-                color: `rgb(255, 0, 0)`,
-                type: "round",
-                icon: `https://unpkg.com/lucide-static@0.321.0/icons/phone-off.svg`,
+            active: { // State when call is active
+                color: rgb(255, 0, 0),
+                type: "round", // Just the round button, no text
+                icon: https://unpkg.com/lucide-static@0.321.0/icons/phone-off.svg,
             },
         };
 
+        // Inject Vapi AI SDK and configure
         (function (d, t) {
-            var g = d.createElement(t),
+            var g = document.createElement(t),
                 s = d.getElementsByTagName(t)[0];
             g.src = "https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js";
             g.defer = true;
@@ -61,9 +52,9 @@
             s.parentNode.insertBefore(g, s);
             g.onload = function () {
                 vapiInstance = window.vapiSDK.run({
-                    apiKey: apiKey,
-                    assistant: assistant,
-                    config: buttonConfig,
+                    apiKey: apiKey, // Use dynamically set API key
+                    assistant: assistant, // Use dynamically set Assistant ID
+                    config: buttonConfig, // Optional button configuration
                 });
             };
         })(document, "script");
