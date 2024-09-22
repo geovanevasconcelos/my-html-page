@@ -1,0 +1,50 @@
+<script>
+    var vapiInstance = null;
+    const assistant = "0c48d3f0-860b-4dc2-87f4-cb3c02fee521"; // Substitute with your assistant ID
+    const apiKey = "9cda0170-de98-4142-9e2c-8023fcd990a2"; // Substitute with your Public key from Vapi Dashboard.
+    
+    const buttonConfig = {
+        position: "bottom-right", // Set button position
+        offset: "40px", // Distance from the edge
+        width: "50px", // Min-width of the button
+        height: "50px", // Height of the button
+        idle: { // State when not active
+            color: `rgb(93, 254, 202)`, 
+            type: "pill", // or "round"
+            title: "Have a quick question?", // Required for Pill
+            subtitle: "Talk with our AI assistant", // Required for Pill
+            icon: `https://unpkg.com/lucide-static@0.321.0/icons/phone.svg`,
+        },
+        loading: { // State when connecting
+            color: `rgb(93, 124, 202)`,
+            type: "pill", // or "round"
+            title: "Connecting...", // Required for Pill
+            subtitle: "Please wait", // Required for Pill
+            icon: `https://unpkg.com/lucide-static@0.321.0/icons/loader-2.svg`,
+        },
+        active: { // State when call is active
+            color: `rgb(255, 0, 0)`,
+            type: "pill", // or "round"
+            title: "Call is in progress...", // Required for Pill
+            subtitle: "End the call.", // Required for Pill
+            icon: `https://unpkg.com/lucide-static@0.321.0/icons/phone-off.svg`,
+        },
+    };
+
+    (function (d, t) {
+        var g = document.createElement(t),
+            s = d.getElementsByTagName(t)[0];
+        g.src = "https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js";
+        g.defer = true;
+        g.async = true;
+        s.parentNode.insertBefore(g, s);
+
+        g.onload = function () {
+            vapiInstance = window.vapiSDK.run({
+                apiKey: apiKey, // mandatory
+                assistant: assistant, // mandatory
+                config: buttonConfig, // optional
+            });
+        };
+    })(document, "script");
+</script>
