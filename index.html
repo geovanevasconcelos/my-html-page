@@ -44,8 +44,8 @@
             return urlParams.get(param);
         }
 
-        const apiKey = getQueryParam('apiKey') || '9cda0170-de98-4142-9e2c-8023fcd990a2';
-        const assistant = getQueryParam('assistant') || 'b9bfd208-7b39-4976-b1ff-7461bae34cf8';
+        const apiKey = getQueryParam('apiKey') || 'defaultkey';
+        const assistant = getQueryParam('assistant') || 'default assistant';
 
         const button = document.getElementById('vapi-button');
         button.addEventListener('click', function() {
